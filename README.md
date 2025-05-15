@@ -9,12 +9,6 @@ Projekt realizowany w ramach przedmiotu *Inżynieria oprogramowania* – **wykon
 1. [Zakres projektu](#zakres-projektu)  
 2. [Funkcje i priorytety](#funkcje-i-priorytety)  
 3. [Technologie](#technologie)  
-4. [Wymagania](#wymagania)  
-5. [Szybki start](#szybki-start)  
-6. [Struktura katalogów](#struktura-katalogów)  
-7. [Historia zmian](#historia-zmian)  
-8. [Licencja](#licencja)  
-9. [Kontakt](#kontakt)
 
 ---
 
