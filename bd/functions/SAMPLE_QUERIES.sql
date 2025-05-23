@@ -39,3 +39,13 @@ SELECT Imie, Nazwisko, Data_Urodzenia FROM Osoby ORDER BY Nazwisko;
 
 SELECT Zdarzenia.Opis_Zdarzenia, Zdarzenia.Nazwa_Zdarzenia FROM Zdarzenia JOIN Osoby_Zdarzenia on Osoby_Zdarzenia.ID_Zdarzenie = Zdarzenia.ID_Zdarzenie WHERE Osoby_Zdarzenia.ID_Osoba = 1; 
 
+
+
+SELECT p2.Imie, p2.Nazwisko, pk.Stopien_Pokrewienstwa
+FROM Osoby_Pokrewienstwa op
+JOIN Pokrewienstwa pk ON pk.ID_Pokrewienstwo = op.ID_Pokrewienstwo
+JOIN Osoby p1 ON p1.ID_Osoba = op.ID_Osoba_1
+JOIN Osoby p2 ON p2.ID_Osoba = op.ID_Osoba_2
+WHERE p1.ID_Osoba = 1;             -- ← zastąp ID_Osoba
+
+
