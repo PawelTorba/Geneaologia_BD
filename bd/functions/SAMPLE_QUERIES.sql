@@ -37,5 +37,5 @@ SELECT Imie, Nazwisko, Data_Urodzenia FROM Osoby ORDER BY Nazwisko;
 
 --Wypisywanie wszystkich zdarzeń dotyczących określonej Osoby (po ID_Osoba)
 
-
+SELECT Zdarzenia.Opis_Zdarzenia, Zdarzenia.Nazwa_Zdarzenia FROM Zdarzenia JOIN Osoby_Zdarzenia on Osoby_Zdarzenia.ID_Zdarzenie = Zdarzenia.ID_Zdarzenie WHERE Osoby_Zdarzenia.ID_Osoba = 1; 
 
