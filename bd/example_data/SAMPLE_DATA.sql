@@ -1,94 +1,117 @@
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('1', 'Krzysztof', 'Pachołek', NULL, '1979-07-22', '2038-03-22');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('2', 'Julita', 'Browarczyk', 'Jacek', '1982-02-05', '2038-07-26');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('3', 'Antoni', 'Sztaba', 'Rozalia', '1972-01-19', NULL);
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('4', 'Damian', 'Folga', 'Maksymilian', '1999-11-01', '2060-08-24');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('5', 'Natan', 'Morawiak', 'Eryk', '2007-02-16', NULL);
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('6', 'Krzysztof', 'Koral', NULL, '1958-11-03', '2033-03-01');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('7', 'Rafał', 'Foit', 'Cezary', '2004-05-16', NULL);
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('8', 'Alan', 'Makles', 'Piotr', '1944-11-17', '2019-09-30');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('9', 'Inga', 'Jachimczak', 'Bruno', '1984-07-25', '2045-09-12');
-INSERT INTO Osoby (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) OVERRIDING SYSTEM VALUE VALUES ('10', 'Dariusz', 'Berdzik', 'Bianka', '1971-01-24', NULL);
-INSERT INTO Rodziny (ID_Rodziny, Nazwisko_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('1', 'Szwaj');
-INSERT INTO Rodziny (ID_Rodziny, Nazwisko_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('2', 'Szmajda');
-INSERT INTO Rodziny (ID_Rodziny, Nazwisko_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('3', 'Gadzała');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('1', '1', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('2', '2', '3');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('3', '3', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('4', '4', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('5', '5', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('6', '6', '1');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('7', '7', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('8', '8', '2');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('9', '9', '3');
-INSERT INTO Osoby_Rodziny (ID_Osoba_Rodzina, ID_Osoba, ID_Rodziny) OVERRIDING SYSTEM VALUE VALUES ('10', '10', '2');
-INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja) OVERRIDING SYSTEM VALUE VALUES ('1', 'Zabrze', 'Miejscowość w Polsce.', '(19.6206, 50.8267)');
-INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja) OVERRIDING SYSTEM VALUE VALUES ('2', 'Piekary Śląskie', 'Miejscowość na śląsku.', '(20.5812, 51.4280)');
-INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja) OVERRIDING SYSTEM VALUE VALUES ('3', 'Sanok', 'Miejscowosc na Podkarpaciu.', '(19.9458, 50.1947)');
-INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja) OVERRIDING SYSTEM VALUE VALUES ('4', 'Kościerzyna', 'Miejscowość w Polsce.', '(21.3078, 50.5383)');
-INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja) OVERRIDING SYSTEM VALUE VALUES ('5', 'Polkowice', 'Miejscowość w Polsce.', '(21.0545, 50.9151)');
-INSERT INTO Fotografie (ID_Zdjecie, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) OVERRIDING SYSTEM VALUE VALUES ('1', 'Komórka przemysłowy żołnierz.', '2021-10-07', '5');
-INSERT INTO Fotografie (ID_Zdjecie, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) OVERRIDING SYSTEM VALUE VALUES ('2', 'Umowa r. kolacja matematyka ku wejść przejaw.', '2017-11-23', '4');
-INSERT INTO Fotografie (ID_Zdjecie, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) OVERRIDING SYSTEM VALUE VALUES ('3', 'Ani ona nazwisko przyczyna powietrze polegać.', '2013-09-01', '5');
-INSERT INTO Fotografie (ID_Zdjecie, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) OVERRIDING SYSTEM VALUE VALUES ('4', 'Naukowiec ochrona epoka składać.', '2019-08-03', '4');
-INSERT INTO Fotografie (ID_Zdjecie, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) OVERRIDING SYSTEM VALUE VALUES ('5', '30 akt Niemcy.', '2024-03-05', '3');
-INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia) OVERRIDING SYSTEM VALUE VALUES ('1', '5', 'Slub.', 'Przyjęcie Weselne', '2005-05-29');
-INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia) OVERRIDING SYSTEM VALUE VALUES ('2', '1', 'Pogrzeb.', 'Ceremonia pogrzebowa', '2008-11-14');
-INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia) OVERRIDING SYSTEM VALUE VALUES ('3', '2', 'Przyjęcie urodzinowe', 'Przyjęcie urodzinowe dla rodziny i przyjaciół', '2006-08-06');
-INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia) OVERRIDING SYSTEM VALUE VALUES ('4', '1', 'Spotkanie towarzyskie', 'Niezaplanowane spotkanie', '2009-02-16');
-INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia) OVERRIDING SYSTEM VALUE VALUES ('5', '4', 'Ślub', 'Ceremonia kościelna', '2015-06-30');
-INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('1', '1', '3');
-INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('2', '2', '2');
-INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('3', '3', '3');
-INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('4', '4', '3');
-INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('5', '5', '5');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('1', '1', '1');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('2', '1', '4');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('3', '2', '5');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('4', '2', '3');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('5', '3', '2');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('6', '4', '3');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('7', '5', '3');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('8', '6', '4');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('9', '7', '3');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('10', '8', '2');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('11', '8', '5');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('12', '9', '2');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('13', '9', '2');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('14', '10', '4');
-INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie) OVERRIDING SYSTEM VALUE VALUES ('15', '10', '4');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('1', '1', '1');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('2', '2', '1');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('3', '3', '2');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('4', '4', '4');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('5', '5', '2');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('6', '6', '1');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('7', '7', '3');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('8', '8', '3');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('9', '9', '3');
-INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie) OVERRIDING SYSTEM VALUE VALUES ('10', '10', '4');
-INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa) OVERRIDING SYSTEM VALUE VALUES ('1', 'rodzic');
-INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa) OVERRIDING SYSTEM VALUE VALUES ('2', 'dziecko');
-INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa) OVERRIDING SYSTEM VALUE VALUES ('3', 'rodzeństwo');
-INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa) OVERRIDING SYSTEM VALUE VALUES ('4', 'wuj/ciotka');
-INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa) OVERRIDING SYSTEM VALUE VALUES ('5', 'kuzyn');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('1', '7', '1', '1');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('2', '10', '5', '2');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('3', '6', '1', '2');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('4', '7', '5', '1');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('5', '7', '5', '2');
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoby_Pokrewienstwo, ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) OVERRIDING SYSTEM VALUE VALUES ('6', '7', '3', '1');
-INSERT INTO Zwiazki (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) OVERRIDING SYSTEM VALUE VALUES ('1', 'Partnerstwo', '2010-06-17', NULL, NULL);
-INSERT INTO Zwiazki (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) OVERRIDING SYSTEM VALUE VALUES ('2', 'Małżeństwo', '2016-02-10', NULL, NULL);
-INSERT INTO Zwiazki (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) OVERRIDING SYSTEM VALUE VALUES ('3', 'Małżeństwo', '2012-10-10', NULL, NULL);
-INSERT INTO Zwiazki (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) OVERRIDING SYSTEM VALUE VALUES ('4', 'Partnerstwo', '2003-05-01', NULL, NULL);
-INSERT INTO Zwiazki (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) OVERRIDING SYSTEM VALUE VALUES ('5', 'Małżeństwo', '2003-08-30', NULL, NULL);
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('1', '6', '1');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('2', '9', '1');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('3', '2', '2');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('4', '4', '2');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('5', '3', '3');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('6', '10', '3');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('7', '7', '4');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('8', '1', '4');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('9', '8', '5');
-INSERT INTO Osoby_Zwiazki (ID_Osoba_Zwiazki, ID_Osoba, ID_Zwiazek) OVERRIDING SYSTEM VALUE VALUES ('10', '5', '5');
+-- Rodziny
+INSERT INTO Rodziny (Nazwisko_Rodziny) VALUES ('Kowalski');
+INSERT INTO Rodziny (Nazwisko_Rodziny) VALUES ('Nowak');
+
+-- Osoby (Rodzina Kowalskich)
+-- Pokolenie 1
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Jan', 'Kowalski', NULL, '1950-05-10', NULL),     -- ID 1
+('Maria', 'Kowalska', NULL, '1952-07-22', NULL);   -- ID 2
+
+-- Pokolenie 2
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Piotr', 'Kowalski', NULL, '1975-03-15', NULL),   -- ID 3
+('Anna', 'Kowalska', NULL, '1978-09-30', NULL);    -- ID 4
+
+-- Pokolenie 3
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Marek', 'Kowalski', NULL, '2000-12-01', NULL),   -- ID 5
+('Ola', 'Kowalska', NULL, '2003-06-15', NULL);     -- ID 6
+
+-- Osoby (Rodzina Nowaków)
+-- Pokolenie 1
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Andrzej', 'Nowak', NULL, '1960-04-05', NULL),    -- ID 7
+('Elżbieta', 'Nowak', NULL, '1962-02-18', NULL);   -- ID 8
+
+-- Pokolenie 2
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Tomasz', 'Nowak', NULL, '1985-11-12', NULL),     -- ID 9
+('Katarzyna', 'Nowak', NULL, '1988-06-08', NULL);  -- ID 10
+
+-- Pokolenie 3
+INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
+('Julia', 'Nowak', NULL, '2010-10-10', NULL);      -- ID 11
+
+-- Przypisanie do rodzin
+INSERT INTO Osoby_Rodziny (ID_Osoba, ID_Rodziny) VALUES 
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1),
+(7, 2), (8, 2), (9, 2), (10, 2), (11, 2);
+
+-- Pokrewieństwa
+INSERT INTO Pokrewienstwa (Stopien_Pokrewienstwa) VALUES 
+('rodzic'), ('dziecko'), ('rodzeństwo');
+
+-- Pokrewieństwa rodziny Kowalskich
+INSERT INTO Osoby_Pokrewienstwa (ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) VALUES
+-- Jan i Maria -> Piotr i Anna
+(1, 1, 3), (2, 1, 3),
+(1, 1, 4), (2, 1, 4),
+-- Piotr i Anna są rodzeństwem
+(3, 3, 4), (4, 3, 3),
+-- Piotr i Anna -> Marek i Ola
+(3, 1, 5), (4, 1, 5),
+(3, 1, 6), (4, 1, 6),
+-- Marek i Ola są rodzeństwem
+(5, 3, 6), (6, 3, 5);
+
+-- Pokrewieństwa rodziny Nowaków
+INSERT INTO Osoby_Pokrewienstwa (ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) VALUES
+-- Andrzej i Elżbieta -> Tomasz i Katarzyna
+(7, 1, 9), (8, 1, 9),
+(7, 1, 10), (8, 1, 10),
+-- Tomasz i Katarzyna są rodzeństwem
+(9, 3, 10), (10, 3, 9),
+-- Tomasz i Katarzyna -> Julia
+(9, 1, 11), (10, 1, 11);
+
+-- Miejsca
+INSERT INTO Miejsca (Nazwa_Miejsca, Opis, Lokalizacja) VALUES
+('Warszawa', 'Szpital wojewódzki, miejsce urodzenia', POINT(21.0122, 52.2297)),  -- ID 1
+('Kraków', 'Kościół Mariacki, miejsce ślubu', POINT(19.9400, 50.0614)),          -- ID 2
+('Poznań', 'Cmentarz komunalny', POINT(16.9252, 52.4064));                      -- ID 3
+
+-- Zdarzenia
+INSERT INTO Zdarzenia (ID_Miejsce, Nazwa_Zdarzenia, Opis_Zdarzenia, Data_Zdarzenia) VALUES
+(1, 'Narodziny Marka Kowalskiego', 'Marek przyszedł na świat w szpitalu w Warszawie', '2000-12-01'),
+(2, 'Ślub Piotra i Anny Kowalskich', 'Piotr i Anna zawarli małżeństwo w Krakowie', '1999-05-15'),
+(1, 'Narodziny Julii Nowak', 'Julia urodziła się w Warszawie', '2010-10-10');
+
+-- Osoby_Zdarzenia
+INSERT INTO Osoby_Zdarzenia (ID_Osoba, ID_Zdarzenie) VALUES
+(5, 1),
+(3, 2), (4, 2),
+(11, 3);
+
+
+-- Zwiazki
+INSERT INTO Zwiazki (Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) VALUES
+('małżeństwo', '1974-06-10', NULL, NULL),  -- Jan i Maria Kowalscy
+('małżeństwo', '1998-04-22', NULL, NULL),  -- Piotr i Anna Kowalscy
+('małżeństwo', '1984-09-01', NULL, NULL),  -- Andrzej i Elżbieta Nowak
+('związek nieformalny', '2009-01-01', '2011-12-31', 'rozstanie');  -- Tomasz i Katarzyna Nowak
+
+-- Osoby_Zwiazki
+INSERT INTO Osoby_Zwiazki (ID_Osoba, ID_Zwiazek) VALUES
+(1, 1), (2, 1),
+(3, 2), (4, 2),
+(7, 3), (8, 3),
+(9, 4), (10, 4);
+
+-- Fotografie
+INSERT INTO Fotografie (Plik, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) VALUES
+(E'\\x', 'Zdjęcie ze ślubu Piotra i Anny', '1999-05-15', 2),  -- ID 1
+(E'\\x', 'Noworodek Marek w szpitalu', '2000-12-01', 1),       -- ID 2
+(E'\\x', 'Rodzina Nowaków w parku', '2010-10-10', 1);          -- ID 3
+
+-- Zdarzenia_Fotografie
+INSERT INTO Zdarzenia_Fotografie (ID_Zdjecie, ID_Zdarzenie) VALUES
+(1, 2),
+(2, 1),
+(3, 3);
+
+-- Osoby_Fotografie
+INSERT INTO Osoby_Fotografie (ID_Osoba, ID_Zdjecie) VALUES
+(3, 1), (4, 1),
+(5, 2),
+(7, 3), (8, 3), (9, 3), (10, 3), (11, 3);
