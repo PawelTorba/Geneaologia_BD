@@ -1,0 +1,5 @@
+Tworzenie kopii zapasowej struktury bazy danych wraz z danymi
+pg_dump.exe -U postgres -h localhost -p 5432 -Fp -f "D:\Backups\geneaologia_%DATE:~-10%.sql" geneaologia
+
+Odtwarzanie bazy danych wraz z zawartością tabel
+psql -U postgres -h localhost -p 5432 -d postgres -f /backups/nazwa_backupu
