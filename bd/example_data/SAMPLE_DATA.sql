@@ -371,4 +371,66 @@ VALUES
   ( 19, 11, 16);
 
 
+--------------------------------------------------------------------
+-- 5. Fotografie + relacje (przykładowe zdjęcia)
+--------------------------------------------------------------------
+INSERT INTO Fotografie (ID_Zdjecie, Plik, Opis_Zdjecia, Data_Wykonania, ID_Miejsce)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1, NULL,
+    'Barbara i Roman chwilę po ceremonii ślubnej przed Urzędem Stanu Cywilnego w Krakowie; na zdjęciu młoda para z obrączkami.',
+    '1980-01-01', 3),
+  ( 2, NULL,
+    'Zofia i Jakub po złożeniu przysięgi – Urząd Stanu Cywilnego w Krakowie.',
+    '2000-07-11', 3),
+  ( 3, NULL,
+    'Agata i Andrzej podczas pierwszego tańca w USC Warszawa.',
+    '2004-09-14', 4),
+  ( 4, NULL,
+    'Noworodek Antoni Kowalski tuż po narodzinach, Szpital Uniwersytecki w Krakowie.',
+    '2002-01-01', 1),
+  ( 5, NULL,
+    'Ada Szczurek chwilę po narodzinach w Szpitalu Dzieciątka Jezus w Warszawie.',
+    '2007-08-01', 2);
+
+--------------------------------------------------------------------
+-- Powiązania zdjęć ze zdarzeniami
+--------------------------------------------------------------------
+INSERT INTO Zdarzenia_Fotografie (ID_Zdarzenia_Fotografie, ID_Zdjecie, ID_Zdarzenie)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1, 1, 14),  -- Ślub Barbary i Romana
+  ( 2, 2, 15),  -- Ślub Zofii i Jakuba
+  ( 3, 3, 16),  -- Ślub Agaty i Andrzeja
+  ( 4, 4,  9),  -- Narodziny Antoniego
+  ( 5, 5, 11);  -- Narodziny Ady
+
+--------------------------------------------------------------------
+-- Powiązania zdjęć z osobami widocznymi na fotografii
+--------------------------------------------------------------------
+INSERT INTO Osoby_Fotografie (ID_Osoby_Fotografie, ID_Osoba, ID_Zdjecie)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1,  5, 1),  -- Barbara na zdjęciu ślubnym
+  ( 2,  6, 1),  -- Roman
+  ( 3,  7, 2),  -- Zofia
+  ( 4,  8, 2),  -- Jakub
+  ( 5, 10, 3),  -- Agata
+  ( 6, 11, 3),  -- Andrzej
+  ( 7, 13, 4),  -- Antoni (noworodek)
+  ( 8, 15, 5);  -- Ada  (noworodek)
+
+--------------------------------------------------------------------
+-- Aktualizacja sekwencji dla nowych tabel
+--------------------------------------------------------------------
+SELECT setval(pg_get_serial_sequence('fotografie','id_zdjecie'),
+              (SELECT COALESCE(MAX(id_zdjecie),0)+1 FROM fotografie), false);
+
+SELECT setval(pg_get_serial_sequence('zdarzenia_fotografie','id_zdarzenia_fotografie'),
+              (SELECT COALESCE(MAX(id_zdarzenia_fotografie),0)+1 FROM zdarzenia_fotografie), false);
+
+SELECT setval(pg_get_serial_sequence('osoby_fotografie','id_osoby_fotografie'),
+              (SELECT COALESCE(MAX(id_osoby_fotografie),0)+1 FROM osoby_fotografie), false);
+
+
 COMMIT;
