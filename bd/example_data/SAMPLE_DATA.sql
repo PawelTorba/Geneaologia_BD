@@ -1,117 +1,272 @@
--- Rodziny
-INSERT INTO Rodziny (Nazwisko_Rodziny) VALUES ('Kowalski');
-INSERT INTO Rodziny (Nazwisko_Rodziny) VALUES ('Nowak');
+-- sample_data.sql
+SET client_encoding = 'UTF8';
 
--- Osoby (Rodzina Kowalskich)
--- Pokolenie 1
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Jan', 'Kowalski', NULL, '1950-05-10', NULL),     -- ID 1
-('Maria', 'Kowalska', NULL, '1952-07-22', NULL);   -- ID 2
+BEGIN;
 
--- Pokolenie 2
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Piotr', 'Kowalski', NULL, '1975-03-15', NULL),   -- ID 3
-('Anna', 'Kowalska', NULL, '1978-09-30', NULL);    -- ID 4
+--------------------------------------------------------------------
+-- 1. Słownik pokrewieństw
+--------------------------------------------------------------------
+INSERT INTO Pokrewienstwa (ID_Pokrewienstwo, Stopien_Pokrewienstwa)
+OVERRIDING SYSTEM VALUE
+VALUES
+  (1 ,'pradziadek'),
+  (2 ,'dziadek'),
+  (3 ,'prababcia'),
+  (4 ,'babcia'),
+  (5 ,'ojciec'),
+  (6 ,'matka'),
+  (7 ,'kuzynostwo'),
+  (8 ,'rodzeństwo'),
+  (9 ,'syn'),
+  (10,'córka'),
+  (11, 'wujek'),
+  (12, 'ciotka');
 
--- Pokolenie 3
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Marek', 'Kowalski', NULL, '2000-12-01', NULL),   -- ID 5
-('Ola', 'Kowalska', NULL, '2003-06-15', NULL);     -- ID 6
+--------------------------------------------------------------------
+-- 2. Rodziny
+--------------------------------------------------------------------
+INSERT INTO Rodziny (ID_Rodzina, Nazwisko_Rodziny)
+OVERRIDING SYSTEM VALUE
+VALUES
+  (1,'Mak'),
+  (2,'Szczurek'),
+  (3,'Kowalscy');
 
--- Osoby (Rodzina Nowaków)
--- Pokolenie 1
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Andrzej', 'Nowak', NULL, '1960-04-05', NULL),    -- ID 7
-('Elżbieta', 'Nowak', NULL, '1962-02-18', NULL);   -- ID 8
+--------------------------------------------------------------------
+-- 3. Osoby
+--------------------------------------------------------------------
+INSERT INTO Osoby 
+  (ID_Osoba, Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu)
+OVERRIDING SYSTEM VALUE
+VALUES
+  -- Rodzina Mak (ID_Rodzina = 1)
+  ( 1,'Joanna',      'Mak',     NULL,'1938-04-01','2008-01-04'), --pra
+  ( 2,'Jakub',       'Mak',     NULL,'1932-04-01','2006-01-03'), --pra
+  ( 3,'Zbigniew', 'Kowalski',     NULL,'1930-04-02','1997-04-01'), --pra
+  ( 4,'Zofia',     'Kowalska',     NULL,'1933-09-01','2003-01-02'), --pra
+  ( 5,'Barbara',   'Kowalska',     NULL,'1960-07-01',NULL), --dziadkowie
+  ( 6,'Roman',     'Kowalski',     NULL,'1960-04-04','2010-05-06'), --dziadkowie
+  ( 7,'Zofia',    'Kowalska',     NULL,'1982-01-07',NULL), --rodzice/wujkowie/ciotki
+  ( 8,'Jakub',      'Kowalski',     NULL,'1980-01-04',NULL), --rodzice/wujkowie/ciotki
+  ( 9,'Natan', 'Kowalski',     NULL,'1983-05-07','2009-05-07'), --rodzice/wujkowie/ciotki
+  (10,'Agata',     'Szczurek', NULL,'1986-03-02',NULL), --rodzice/wujkowie/ciotki
+  (11,'Andrzej',     'Szczurek',     NULL,'1987-01-31',NULL), --rodzice/wujkowie/ciotki
+  (12,'Alicja',   'Kowalska',     NULL,'2005-02-26',NULL), --rodzice/wujkowie/ciotki
+  (13,'Antoni',    'Kowalski', NULL,'2002-01-01',NULL), --rodzice/wujkowie/ciotki
+  (14,'Alex',   'Szczurek', NULL,'2006-03-02',NULL), -- kuzynostwo
+  (15,'Ada',     'Szczurek', NULL,'2007-08-01',NULL); -- kuzynostwo
 
--- Pokolenie 2
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Tomasz', 'Nowak', NULL, '1985-11-12', NULL),     -- ID 9
-('Katarzyna', 'Nowak', NULL, '1988-06-08', NULL);  -- ID 10
+--------------------------------------------------------------------
+-- 4. Przynależność osób do rodzin
+--------------------------------------------------------------------
+--ID RODZIN
+--1 MAK
+--2 SZCZUREK
+--3 KOWALSCY
+INSERT INTO Osoby_Rodziny (ID_Osoby_Rodziny, ID_Osoba, ID_Rodzina)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1,  1, 1),( 2,  2, 1),( 3,  3, 3),( 4,  4, 3),( 5,  5, 3),
+  ( 6,  6, 3),( 7,  7, 3),( 8,  8, 3),( 9,  9, 3),(10, 10, 2),
+  (11, 11, 2),(12, 12, 3),(13, 13, 3),(14, 14, 2),(15, 15, 2);
 
--- Pokolenie 3
-INSERT INTO Osoby (Imie, Nazwisko, Drugie_Imie, Data_Urodzenia, Data_Zgonu) VALUES 
-('Julia', 'Nowak', NULL, '2010-10-10', NULL);      -- ID 11
+--------------------------------------------------------------------
+-- 5. Małżeństwa
+--------------------------------------------------------------------
+INSERT INTO Zwiazki
+  (ID_Zwiazek, Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1,'małżeństwo','1950-01-15',NULL,NULL), -- MAK PRADZIADKOWIE
+  ( 2,'małżeństwo','1952-03-22',NULL,NULL), -- KOWALSCY PRADZIADKOWIE
+  ( 3,'małżeństwo','1980-01-01',NULL,NULL), -- KOWALSCY DZIADKOWIE
+  ( 4,'małżeństwo','2000-07-11',NULL,NULL), -- KOWALSCY RODZICE
+  ( 5,'małżeństwo','2004-09-14',NULL,NULL); -- KOWALSCY WUJKOWIE
 
--- Przypisanie do rodzin
-INSERT INTO Osoby_Rodziny (ID_Osoba, ID_Rodziny) VALUES 
-(1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1),
-(7, 2), (8, 2), (9, 2), (10, 2), (11, 2);
+-- Osoby w związkach (dwa wiersze na każdy związek)
+INSERT INTO Osoby_Zwiazki (ID_Osoby_Zwiazki, ID_Osoba, ID_Zwiazek)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1,  1, 1),( 2,  2, 1), -- MAK PRADZIADKOWIE
+  ( 3,  3, 2),( 4,  4, 2), -- KOWALSCY PRADZIADKOWIE
+  ( 5,  5, 3),( 6,  6, 3), -- KOWALSCY DZIADKOWIE
+  ( 7,  7, 4),( 8,  8, 4), -- KOWALSCY RODZICE
+  ( 9, 10, 5),(10, 11, 5); -- KOWALSCY WUJKOWIE
 
--- Pokrewieństwa
-INSERT INTO Pokrewienstwa (Stopien_Pokrewienstwa) VALUES 
-('rodzic'), ('dziecko'), ('rodzeństwo');
+--------------------------------------------------------------------
+-- 6. Pokrewieństwa
+--------------------------------------------------------------------
+INSERT INTO Osoby_Pokrewienstwa
+  (ID_Osoby_Pokrewienstwo, ID_Pokrewienstwo, ID_Osoba_1, ID_Osoba_2)
+OVERRIDING SYSTEM VALUE
+VALUES
+  -- #### ALICJA KOWALSKA
+  ( 1, 1 , 12, 2),  --PRADZIADEK
+  ( 2, 3 , 12, 1),  --PRABABCIA
+  ( 3, 1 , 12, 3),  --PRADZIADEK
+  ( 4, 3 , 12, 4),  --PRABABCIA
 
--- Pokrewieństwa rodziny Kowalskich
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) VALUES
--- Jan i Maria -> Piotr i Anna
-(1, 1, 3), (2, 1, 3),
-(1, 1, 4), (2, 1, 4),
--- Piotr i Anna są rodzeństwem
-(3, 3, 4), (4, 3, 3),
--- Piotr i Anna -> Marek i Ola
-(3, 1, 5), (4, 1, 5),
-(3, 1, 6), (4, 1, 6),
--- Marek i Ola są rodzeństwem
-(5, 3, 6), (6, 3, 5);
+  ( 5, 4 , 12, 5),  --BABCIA
+  ( 6, 2 , 12, 6),  --DZIADEK
+  ( 7, 6 , 12, 7),  --MATKA
+  ( 8, 5 , 12, 8),  --OJCIEC
 
--- Pokrewieństwa rodziny Nowaków
-INSERT INTO Osoby_Pokrewienstwa (ID_Osoba_1, ID_Pokrewienstwo, ID_Osoba_2) VALUES
--- Andrzej i Elżbieta -> Tomasz i Katarzyna
-(7, 1, 9), (8, 1, 9),
-(7, 1, 10), (8, 1, 10),
--- Tomasz i Katarzyna są rodzeństwem
-(9, 3, 10), (10, 3, 9),
--- Tomasz i Katarzyna -> Julia
-(9, 1, 11), (10, 1, 11);
+  ( 9, 11, 12, 9),  --WUJEK
+  (10, 12, 12, 10), --CIOTKA
+  (11, 11, 12, 11), --WUJEK
 
--- Miejsca
-INSERT INTO Miejsca (Nazwa_Miejsca, Opis, Lokalizacja) VALUES
-('Warszawa', 'Szpital wojewódzki, miejsce urodzenia', POINT(21.0122, 52.2297)),  -- ID 1
-('Kraków', 'Kościół Mariacki, miejsce ślubu', POINT(19.9400, 50.0614)),          -- ID 2
-('Poznań', 'Cmentarz komunalny', POINT(16.9252, 52.4064));                      -- ID 3
+  (12, 8 , 12, 13), --RODZENSTWO
 
--- Zdarzenia
-INSERT INTO Zdarzenia (ID_Miejsce, Nazwa_Zdarzenia, Opis_Zdarzenia, Data_Zdarzenia) VALUES
-(1, 'Narodziny Marka Kowalskiego', 'Marek przyszedł na świat w szpitalu w Warszawie', '2000-12-01'),
-(2, 'Ślub Piotra i Anny Kowalskich', 'Piotr i Anna zawarli małżeństwo w Krakowie', '1999-05-15'),
-(1, 'Narodziny Julii Nowak', 'Julia urodziła się w Warszawie', '2010-10-10');
+  (13, 7 , 12, 14), --KUZYNOSTWO
+  (14, 7 , 12, 15), --KUZYNOSTWO
 
--- Osoby_Zdarzenia
-INSERT INTO Osoby_Zdarzenia (ID_Osoba, ID_Zdarzenie) VALUES
-(5, 1),
-(3, 2), (4, 2),
-(11, 3);
+  ( 15, 10,  1,  5),
 
 
--- Zwiazki
-INSERT INTO Zwiazki (Typ_Relacji, Data_Rozpoczecia, Data_Zakonczenia, Powod_Zakonczenia) VALUES
-('małżeństwo', '1974-06-10', NULL, NULL),  -- Jan i Maria Kowalscy
-('małżeństwo', '1998-04-22', NULL, NULL),  -- Piotr i Anna Kowalscy
-('małżeństwo', '1984-09-01', NULL, NULL),  -- Andrzej i Elżbieta Nowak
-('związek nieformalny', '2009-01-01', '2011-12-31', 'rozstanie');  -- Tomasz i Katarzyna Nowak
+  ( 16, 10,  2,  5),
 
--- Osoby_Zwiazki
-INSERT INTO Osoby_Zwiazki (ID_Osoba, ID_Zwiazek) VALUES
-(1, 1), (2, 1),
-(3, 2), (4, 2),
-(7, 3), (8, 3),
-(9, 4), (10, 4);
 
--- Fotografie
-INSERT INTO Fotografie (Plik, Opis_Zdjecia, Data_Wykonania, ID_Miejsce) VALUES
-(E'\\x', 'Zdjęcie ze ślubu Piotra i Anny', '1999-05-15', 2),  -- ID 1
-(E'\\x', 'Noworodek Marek w szpitalu', '2000-12-01', 1),       -- ID 2
-(E'\\x', 'Rodzina Nowaków w parku', '2010-10-10', 1);          -- ID 3
+  ( 17,  9,  3,  6),
 
--- Zdarzenia_Fotografie
-INSERT INTO Zdarzenia_Fotografie (ID_Zdjecie, ID_Zdarzenie) VALUES
-(1, 2),
-(2, 1),
-(3, 3);
 
--- Osoby_Fotografie
-INSERT INTO Osoby_Fotografie (ID_Osoba, ID_Zdjecie) VALUES
-(3, 1), (4, 1),
-(5, 2),
-(7, 3), (8, 3), (9, 3), (10, 3), (11, 3);
+  ( 18,  9,  4,  6),
+
+
+  ( 19,  9,  5,  8),
+  ( 20,  9,  5,  9),
+
+
+  ( 21,  9,  6,  8),
+  ( 22,  9,  6,  9),
+
+
+  ( 23, 10,  7, 12),
+  ( 24,  9,  7, 13),
+
+
+  ( 25,  6,  8,  5),   -- matka
+  ( 26,  5,  8,  6),   -- ojciec
+  ( 27,  8,  8,  9),   -- rodzeństwo
+  ( 28, 10,  8, 12),   -- córka
+  ( 29,  9,  8, 13),   -- syn
+
+
+  ( 30,  6,  9,  5),   -- matka
+  ( 31,  5,  9,  6),   -- ojciec
+  ( 32,  8,  9,  8),   -- rodzeństwo
+
+
+  ( 33,  9, 10, 14),   -- syn  Alex
+  ( 34, 10, 10, 15),   -- córka  Ada
+
+
+  ( 35,  9, 11, 14),   -- syn  Alex
+  ( 36, 10, 11, 15),   -- córka  Ada
+
+
+  ( 37,  3, 13,  1),   -- prababc ia  Joanna
+  ( 38,  1, 13,  2),   -- pradziadek  Jakub Mak
+  ( 39,  1, 13,  3),   -- pradziadek  Zbigniew Kowalski
+  ( 40,  3, 13,  4),   -- prababcia  Zofia Kowalska
+  ( 41,  4, 13,  5),   -- babcia
+  ( 42,  2, 13,  6),   -- dziadek
+  ( 43,  6, 13,  7),   -- matka
+  ( 44,  5, 13,  8),   -- ojciec
+  ( 45, 11, 13,  9),   -- wujek  Natan
+  ( 46, 12, 13, 10),   -- ciotka Agata
+  ( 47, 11, 13, 11),   -- wujek  Andrzej
+  ( 48,  8, 13, 12),   -- rodzeństwo  Alicja
+  ( 49,  7, 13, 14),   -- kuzyn  Alex
+  ( 50,  7, 13, 15),   -- kuzynka  Ada
+
+  ( 51,  5, 14, 11),   -- ojciec  Andrzej
+  ( 52,  6, 14, 10),   -- matka  Agata
+  ( 53,  8, 14, 15),   -- rodzeństwo  Ada
+  ( 54,  7, 14, 12),   -- kuzynostwo  Alicja
+  ( 55,  7, 14, 13),   -- kuzynostwo  Antoni
+
+  ( 56,  5, 15, 11),   -- ojciec  Andrzej
+  ( 57,  6, 15, 10),   -- matka  Agata
+  ( 58,  8, 15, 14),   -- rodzeństwo  Alex
+  ( 59,  7, 15, 12),   -- kuzynostwo  Alicja
+  ( 60,  7, 15, 13);   -- kuzynostwo  Antoni
+
+
+
+INSERT INTO Osoby_Pokrewienstwa
+        (ID_Osoby_Pokrewienstwo, ID_Pokrewienstwo, ID_Osoba_1, ID_Osoba_2)
+OVERRIDING SYSTEM VALUE
+VALUES
+  (61, 2,  7,  2),  -- dziadek  Jakub Mak
+  (62, 4,  7,  1),  -- babcia  Joanna Mak
+  (63, 2,  7,  3),  -- dziadek  Zbigniew Kowalski
+  (64, 4,  7,  4),  -- babcia  Zofia Kowalska
+
+  (65, 2,  8,  2),
+  (66, 4,  8,  1),
+  (67, 2,  8,  3),
+  (68, 4,  8,  4),
+
+  (69, 2,  9,  2),
+  (70, 4,  9,  1),
+  (71, 2,  9,  3),
+  (72, 4,  9,  4),
+
+  (73, 2, 10,  2),
+  (74, 4, 10,  1),
+  (75, 2, 10,  3),
+  (76, 4, 10,  4),
+
+  (77, 2, 11,  2),
+  (78, 4, 11,  1),
+  (79, 2, 11,  3),
+  (80, 4, 11,  4),
+
+  (81, 1, 14,  2),  -- pradziadek  Jakub Mak
+  (82, 3, 14,  1),  -- prababcia  Joanna Mak
+  (83, 1, 14,  3),  -- pradziadek  Zbigniew Kowalski
+  (84, 3, 14,  4),  -- prababcia  Zofia Kowalska
+
+  (85, 1, 15,  2),
+  (86, 3, 15,  1),
+  (87, 1, 15,  3),
+  (88, 3, 15,  4),
+
+  (89, 4, 14,  5),  -- babcia  Barbara Kowalska
+  (90, 2, 14,  6),  -- dziadek Roman Kowalski
+  (91, 4, 15,  5),
+  (92, 2, 15,  6);
+
+
+
+
+
+INSERT INTO Osoby_Pokrewienstwa
+        (ID_Osoby_Pokrewienstwo, ID_Pokrewienstwo, ID_Osoba_1, ID_Osoba_2)
+OVERRIDING SYSTEM VALUE
+VALUES
+
+  (93, 6, 10, 5),   -- matka
+  (94, 5, 10, 6),   -- ojciec
+
+
+  (95, 8, 10, 8),   -- rodzeństwo Agata–Jakub
+  (96, 8, 10, 9),   -- rodzeństwo Agata–Natan
+
+
+  (97, 12, 14,  7),   -- ciotka  Zofia
+  (98, 11, 14,  8),   -- wujek   Jakub
+  (99, 11, 14,  9),   -- wujek   Natan
+  (100,12, 15,  7),   -- ciotka  Zofia
+  (101,11, 15,  8),   -- wujek   Jakub
+  (102,11, 15,  9);   -- wujek   Natan
+
+
+
+DELETE FROM Osoby_Pokrewienstwa
+WHERE  ID_Osoba_1 IN (7, 11)
+  AND  ID_Osoba_2 IN (1, 2, 3, 4)
+  AND  ID_Pokrewienstwo IN (1, 2, 3, 4);
+
+
+COMMIT;
