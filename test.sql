@@ -31,7 +31,7 @@ OVERRIDING SYSTEM VALUE
 VALUES
   (1,'Mak'),
   (2,'Szczurek'),
-  (2,'Kowalscy');
+  (3,'Kowalscy');
 
 --------------------------------------------------------------------
 -- 3. Osoby
@@ -56,7 +56,6 @@ VALUES
   (13,'Antoni',    'Kowalski', NULL,'2002-01-01',NULL), --rodzice/wujkowie/ciotki
   (14,'Alex',   'Szczurek', NULL,'2006-03-02',NULL), -- kuzynostwo
   (15,'Ada',     'Szczurek', NULL,'2007-08-01',NULL); -- kuzynostwo
-
 
 --------------------------------------------------------------------
 -- 4. Przynależność osób do rodzin
@@ -92,9 +91,8 @@ VALUES
   ( 1,  1, 1),( 2,  2, 1), -- MAK PRADZIADKOWIE
   ( 3,  3, 2),( 4,  4, 2), -- KOWALSCY PRADZIADKOWIE
   ( 5,  5, 3),( 6,  6, 3), -- KOWALSCY DZIADKOWIE
-  ( 7,  7, 4),( 8, 8, 4), -- KOWALSCY RODZICE
-  ( 9,  10, 5),(10, 11, 5); -- KOWALSCY WUJKOWIE
- 
+  ( 7,  7, 4),( 8,  8, 4), -- KOWALSCY RODZICE
+  ( 9, 10, 5),(10, 11, 5); -- KOWALSCY WUJKOWIE
 
 --------------------------------------------------------------------
 -- 6. Pokrewieństwa
@@ -102,19 +100,6 @@ VALUES
 INSERT INTO Osoby_Pokrewienstwa
   (ID_Osoby_Pokrewienstwo, ID_Pokrewienstwo, ID_Osoba_1, ID_Osoba_2)
 OVERRIDING SYSTEM VALUE
-  --1 , 'pradziadek'
-  --2 , 'dziadek'
-  --3 , 'prababcia'
-  --4 , 'babcia'
-  --5 , 'ojciec'
-  --6 , 'matka'
-  --7 , 'kuzynostwo'
-  --8 , 'rodzeństwo'
-  --9 , 'syn'
-  --10, 'córka'
-  --11, 'wujek'
-  --12, 'ciotka'
-
 VALUES
   -- #### ALICJA KOWALSKA
   ( 1, 1 , 12, 2),  --PRADZIADEK
@@ -123,18 +108,17 @@ VALUES
   ( 4, 3 , 12, 4),  --PRABABCIA
 
   ( 5, 4 , 12, 5),  --BABCIA
-  ( 6, 2 , 12, 6), --DZIADEK
+  ( 6, 2 , 12, 6),  --DZIADEK
   ( 7, 6 , 12, 7),  --MATKA
-  ( 8, 5, 12, 8), --OJCIEC
+  ( 8, 5 , 12, 8),  --OJCIEC
 
-  ( 9, 11 , 12, 9), --WUJEK
-  (10, 12 , 12, 10), --CIOTKA
-  (11, 11 , 12, 11), --WUJEK
+  ( 9, 11, 12, 9),  --WUJEK
+  (10, 12, 12, 10), --CIOTKA
+  (11, 11, 12, 11), --WUJEK
 
-  (11, 8 , 12, 13), --RODZENSTWO
+  (12, 8 , 12, 13), --RODZENSTWO
 
-  (11, 7 , 12, 14), --KUZYNOSTWO
-  (11, 7 , 12, 15); --KUZYNOSTWO
-  
+  (13, 7 , 12, 14), --KUZYNOSTWO
+  (14, 7 , 12, 15); --KUZYNOSTWO
 
 COMMIT;
