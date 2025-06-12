@@ -268,5 +268,51 @@ WHERE  ID_Osoba_1 IN (7, 11)
   AND  ID_Osoba_2 IN (1, 2, 3, 4)
   AND  ID_Pokrewienstwo IN (1, 2, 3, 4);
 
+/* ---------------------------------------------------------------
+   Zsynchronizowanie wszystkich sekwencji
+---------------------------------------------------------------- */
+
+-- Osoby
+SELECT setval(pg_get_serial_sequence('osoby','id_osoba'),
+              (SELECT COALESCE(MAX(id_osoba),0)+1 FROM osoby),   false);
+
+-- Rodziny
+SELECT setval(pg_get_serial_sequence('rodziny','id_rodzina'),
+              (SELECT COALESCE(MAX(id_rodzina),0)+1 FROM rodziny), false);
+
+-- Miejsca
+SELECT setval(pg_get_serial_sequence('miejsca','id_miejsce'),
+              (SELECT COALESCE(MAX(id_miejsce),0)+1 FROM miejsca), false);
+
+-- Zdarzenia
+SELECT setval(pg_get_serial_sequence('zdarzenia','id_zdarzenie'),
+              (SELECT COALESCE(MAX(id_zdarzenie),0)+1 FROM zdarzenia), false);
+
+-- Pokrewienstwa (słownik stopni pokrewieństwa)
+SELECT setval(pg_get_serial_sequence('pokrewienstwa','id_pokrewienstwo'),
+              (SELECT COALESCE(MAX(id_pokrewienstwo),0)+1 FROM pokrewienstwa), false);
+
+-- Osoby_Rodziny
+SELECT setval(pg_get_serial_sequence('osoby_rodziny','id_osoby_rodziny'),
+              (SELECT COALESCE(MAX(id_osoby_rodziny),0)+1 FROM osoby_rodziny), false);
+
+-- Zwiazki (małżeństwa / relacje)
+SELECT setval(pg_get_serial_sequence('zwiazki','id_zwiazek'),
+              (SELECT COALESCE(MAX(id_zwiazek),0)+1 FROM zwiazki), false);
+
+-- Osoby_Zwiazki
+SELECT setval(pg_get_serial_sequence('osoby_zwiazki','id_osoby_zwiazki'),
+              (SELECT COALESCE(MAX(id_osoby_zwiazki),0)+1 FROM osoby_zwiazki), false);
+
+-- Osoby_Zdarzenia
+SELECT setval(pg_get_serial_sequence('osoby_zdarzenia','id_osoby_zdarzenia'),
+              (SELECT COALESCE(MAX(id_osoby_zdarzenia),0)+1 FROM osoby_zdarzenia), false);
+
+-- Osoby_Pokrewienstwa
+SELECT setval(pg_get_serial_sequence('osoby_pokrewienstwa','id_osoby_pokrewienstwo'),
+              (SELECT COALESCE(MAX(id_osoby_pokrewienstwo),0)+1 FROM osoby_pokrewienstwa), false);
+
+/* ------------------------------------------------------------- */
+
 
 COMMIT;
