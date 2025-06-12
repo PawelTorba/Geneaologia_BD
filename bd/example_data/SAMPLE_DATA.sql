@@ -314,5 +314,61 @@ SELECT setval(pg_get_serial_sequence('osoby_pokrewienstwa','id_osoby_pokrewienst
 
 /* ------------------------------------------------------------- */
 
+-- 4. Miejsca
+INSERT INTO Miejsca (ID_Miejsce, Nazwa_Miejsca, Opis, Lokalizacja)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1,'Szpital Uniwersytecki w Krakowie',                'Szpital przy ul. Kopernika 36 w Krakowie',                               '(50.0669,19.9500)'),
+  ( 2,'Szpital Kliniczny Dzieciatka Jezus w Warszawie',   'Szpital kliniczny przy ul. Lindleya 4 w Warszawie',                       '(52.2228,21.0038)'),
+  ( 3,'Urzad Stanu Cywilnego Krakow',                     'USC Krakow, ul. Lubelska 29',                                             '(50.0736,19.9400)'),
+  ( 4,'Urzad Stanu Cywilnego Warszawa',                   'USC Warszawa, ul. Andersa 5',                                             '(52.2500,21.0000)'),
+  ( 5,'Cmentarz Rakowicki',                               'Cmentarz komunalny w Krakowie przy ul. Rakowickiej',                       '(50.0730,19.9650)'),
+  ( 6,'Cmentarz Powazkowski',                             'Stary cmentarz w Warszawie przy ul. Powazkowskiej',                        '(52.2570,20.9790)');
+
+-- 5. Zdarzenia
+INSERT INTO Zdarzenia (ID_Zdarzenie, ID_Miejsce, Opis_Zdarzenia, Nazwa_Zdarzenia, Data_Zdarzenia)
+OVERRIDING SYSTEM VALUE
+VALUES
+  ( 1, 1,'Narodziny Barbary Kowalskiej w Szpitalu Uniwersyteckim w Krakowie','Narodziny Barbary','1960-07-01'),
+  ( 2, 1,'Narodziny Romana Kowalskiego w Szpitalu Uniwersyteckim w Krakowie','Narodziny Romana','1960-04-04'),
+  ( 3, 1,'Narodziny Zofii Kowalskiej w Szpitalu Uniwersyteckim w Krakowie','Narodziny Zofii','1982-01-07'),
+  ( 4, 1,'Narodziny Jakuba Kowalskiego w Szpitalu Uniwersyteckim w Krakowie','Narodziny Jakuba','1980-01-04'),
+  ( 5, 1,'Narodziny Natana Kowalskiego w Szpitalu Uniwersyteckim w Krakowie','Narodziny Natana','1983-05-07'),
+  ( 6, 2,'Narodziny Agaty Szczurek w Szpitalu Klinicznym Dzieciatka Jezus w Warszawie','Narodziny Agaty','1986-03-02'),
+  ( 7, 2,'Narodziny Andrzeja Szczurka w Szpitalu Klinicznym Dzieciatka Jezus w Warszawie','Narodziny Andrzeja','1987-01-31'),
+  ( 8, 1,'Narodziny Alicji Kowalskiej w Szpitalu Uniwersyteckim w Krakowie','Narodziny Alicji','2005-02-26'),
+  ( 9, 1,'Narodziny Antoniego Kowalskiego w Szpitalu Uniwersyteckim w Krakowie','Narodziny Antoniego','2002-01-01'),
+  (10, 2,'Narodziny Alexa Szczurka w Szpitalu Klinicznym Dzieciatka Jezus w Warszawie','Narodziny Alexa','2006-03-02'),
+  (11, 2,'Narodziny Ady Szczurek w Szpitalu Klinicznym Dzieciatka Jezus w Warszawie','Narodziny Ady','2007-08-01'),
+  (12, 5,'Smierc Romana Kowalskiego na cmentarzu Rakowickim w Krakowie','Smierc Romana','2010-05-06'),
+  (13, 5,'Smierc Natana Kowalskiego na cmentarzu Rakowickim w Krakowie','Smierc Natana','2009-05-07'),
+  (14, 3,'Slub Barbary i Romana w Urzedzie Stanu Cywilnego w Krakowie','Slub Barbary i Romana','1980-01-01'),
+  (15, 3,'Slub Zofii i Jakuba w Urzedzie Stanu Cywilnego w Krakowie','Slub Zofii i Jakuba','2000-07-11'),
+  (16, 4,'Slub Agaty i Andrzeja w Urzedzie Stanu Cywilnego w Warszawie','Slub Agaty i Andrzeja','2004-09-14');
+
+-- 6. Osoby_Zdarzenia
+INSERT INTO Osoby_Zdarzenia (ID_Osoby_Zdarzenia, ID_Osoba, ID_Zdarzenie)
+OVERRIDING SYSTEM VALUE
+VALUES
+  (  1,  5,  1),
+  (  2,  6,  2),
+  (  3,  7,  3),
+  (  4,  8,  4),
+  (  5,  9,  5),
+  (  6, 10,  6),
+  (  7, 11,  7),
+  (  8, 12,  8),
+  (  9, 13,  9),
+  ( 10, 14, 10),
+  ( 11, 15, 11),
+  ( 12,  6, 12),
+  ( 13,  9, 13),
+  ( 14,  5, 14),
+  ( 15,  6, 14),
+  ( 16,  7, 15),
+  ( 17,  8, 15),
+  ( 18, 10, 16),
+  ( 19, 11, 16);
+
 
 COMMIT;
