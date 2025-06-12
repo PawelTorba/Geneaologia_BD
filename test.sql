@@ -121,4 +121,85 @@ VALUES
   (13, 7 , 12, 14), --KUZYNOSTWO
   (14, 7 , 12, 15); --KUZYNOSTWO
 
+
+-- #### POZOSTAŁE OSOBY
+  --  Joanna Mak  (ID 1)  →  córka  Barbara Kowalska
+  ( 12, 10,  1,  5),
+
+  --  Jakub Mak  (ID 2)   →  córka  Barbara Kowalska
+  ( 13, 10,  2,  5),
+
+  --  Zbigniew Kowalski  (ID 3)  →  syn  Roman Kowalski
+  ( 14,  9,  3,  6),
+
+  --  Zofia Kowalska (prababcia)  (ID 4)  →  syn  Roman Kowalski
+  ( 15,  9,  4,  6),
+
+  --  Barbara Kowalska  (ID 5)  →  synowie  Jakub (8) i Natan (9)
+  ( 16,  9,  5,  8),
+  ( 17,  9,  5,  9),
+
+  --  Roman Kowalski  (ID 6)  →  synowie  Jakub (8) i Natan (9)
+  ( 18,  9,  6,  8),
+  ( 19,  9,  6,  9),
+
+  --  Zofia Kowalska (mama)  (ID 7)  →  córka Alicja (12), syn Antoni (13)
+  ( 20, 10,  7, 12),
+  ( 21,  9,  7, 13),
+
+  /*  Jakub Kowalski (tata)  (ID 8)
+      - rodzice:  matka Barbara (5), ojciec Roman (6)
+      - rodzeństwo:  Natan (9)
+      - dzieci:  Alicja (12) i Antoni (13)                               */
+  ( 22,  6,  8,  5),   -- matka
+  ( 23,  5,  8,  6),   -- ojciec
+  ( 24,  8,  8,  9),   -- rodzeństwo
+  ( 25, 10,  8, 12),   -- córka
+  ( 26,  9,  8, 13),   -- syn
+
+  /*  Natan Kowalski (stryj)  (ID 9)
+      - rodzice i rodzeństwo (jak wyżej)                                  */
+  ( 27,  6,  9,  5),   -- matka
+  ( 28,  5,  9,  6),   -- ojciec
+  ( 29,  8,  9,  8),   -- rodzeństwo
+
+  /*  Agata Szczurek (ciocia)  (ID 10)  →  dzieci                         */
+  ( 30,  9, 10, 14),   -- syn  Alex
+  ( 31, 10, 10, 15),   -- córka  Ada
+
+  /*  Andrzej Szczurek (wujek)  (ID 11)  →  dzieci                        */
+  ( 32,  9, 11, 14),   -- syn  Alex
+  ( 33, 10, 11, 15),   -- córka  Ada
+
+  /*  Antoni Kowalski („JA”)  (ID 13)
+      – pełny zestaw analogiczny do już wpisanego dla Alicji (12)         */
+  ( 34,  3, 13,  1),   -- prababc ia  Joanna
+  ( 35,  1, 13,  2),   -- pradziadek  Jakub Mak
+  ( 36,  1, 13,  3),   -- pradziadek  Zbigniew Kowalski
+  ( 37,  3, 13,  4),   -- prababcia  Zofia Kowalska
+  ( 38,  4, 13,  5),   -- babcia
+  ( 39,  2, 13,  6),   -- dziadek
+  ( 40,  6, 13,  7),   -- matka
+  ( 41,  5, 13,  8),   -- ojciec
+  ( 42, 11, 13,  9),   -- wujek  Natan
+  ( 43, 12, 13, 10),   -- ciotka Agata
+  ( 44, 11, 13, 11),   -- wujek  Andrzej
+  ( 45,  8, 13, 12),   -- rodzeństwo  Alicja
+  ( 46,  7, 13, 14),   -- kuzyn  Alex
+  ( 47,  7, 13, 15),   -- kuzynka  Ada
+
+  /*  Alex Szczurek  (ID 14)                                              */
+  ( 48,  5, 14, 11),   -- ojciec  Andrzej
+  ( 49,  6, 14, 10),   -- matka  Agata
+  ( 50,  8, 14, 15),   -- rodzeństwo  Ada
+  ( 51,  7, 14, 12),   -- kuzynostwo  Alicja
+  ( 52,  7, 14, 13),   -- kuzynostwo  Antoni
+
+  /*  Ada Szczurek  (ID 15)                                               */
+  ( 53,  5, 15, 11),   -- ojciec  Andrzej
+  ( 54,  6, 15, 10),   -- matka  Agata
+  ( 55,  8, 15, 14),   -- rodzeństwo  Alex
+  ( 56,  7, 15, 12),   -- kuzynostwo  Alicja
+  ( 57,  7, 15, 13);   -- kuzynostwo  Antoni
+
 COMMIT;
