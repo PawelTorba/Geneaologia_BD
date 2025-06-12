@@ -55,7 +55,7 @@ VALUES
   (12,'Alicja',   'Kowalska',     NULL,'2005-02-26',NULL), --rodzice/wujkowie/ciotki
   (13,'Antoni',    'Kowalski', NULL,'2002-01-01',NULL), --rodzice/wujkowie/ciotki
   (14,'Alex',   'Szczurek', NULL,'2006-03-02',NULL), -- kuzynostwo
-  (15,'Ada',     'Szczurek', NULL,'2007-08-01',NULL), -- kuzynostwo
+  (15,'Ada',     'Szczurek', NULL,'2007-08-01',NULL); -- kuzynostwo
 
 
 --------------------------------------------------------------------
@@ -70,7 +70,7 @@ OVERRIDING SYSTEM VALUE
 VALUES
   ( 1,  1, 1),( 2,  2, 1),( 3,  3, 3),( 4,  4, 3),( 5,  5, 3),
   ( 6,  6, 3),( 7,  7, 3),( 8,  8, 3),( 9,  9, 3),(10, 10, 2),
-  (11, 11, 2),(12, 12, 3),(13, 13, 3),(14, 14, 2),(15, 15, 2),
+  (11, 11, 2),(12, 12, 3),(13, 13, 3),(14, 14, 2),(15, 15, 2);
 
 --------------------------------------------------------------------
 -- 5. Małżeństwa
@@ -83,7 +83,7 @@ VALUES
   ( 2,'małżeństwo','1952-03-22',NULL,NULL), -- KOWALSCY PRADZIADKOWIE
   ( 3,'małżeństwo','1980-01-01',NULL,NULL), -- KOWALSCY DZIADKOWIE
   ( 4,'małżeństwo','2000-07-11',NULL,NULL), -- KOWALSCY RODZICE
-  ( 5,'małżeństwo','2004-09-14',NULL,NULL), -- KOWALSCY WUJKOWIE
+  ( 5,'małżeństwo','2004-09-14',NULL,NULL); -- KOWALSCY WUJKOWIE
 
 -- Osoby w związkach (dwa wiersze na każdy związek)
 INSERT INTO Osoby_Zwiazki (ID_Osoby_Zwiazki, ID_Osoba, ID_Zwiazek)
@@ -93,7 +93,7 @@ VALUES
   ( 3,  3, 2),( 4,  4, 2), -- KOWALSCY PRADZIADKOWIE
   ( 5,  5, 3),( 6,  6, 3), -- KOWALSCY DZIADKOWIE
   ( 7,  7, 4),( 8, 8, 4), -- KOWALSCY RODZICE
-  ( 9,  10, 5),(10, 11, 5), -- KOWALSCY WUJKOWIE
+  ( 9,  10, 5),(10, 11, 5); -- KOWALSCY WUJKOWIE
  
 
 --------------------------------------------------------------------
@@ -134,7 +134,7 @@ VALUES
   (11, 8 , 12, 13), --RODZENSTWO
 
   (11, 7 , 12, 14), --KUZYNOSTWO
-  (11, 7 , 12, 15), --KUZYNOSTWO
+  (11, 7 , 12, 15); --KUZYNOSTWO
   
 
 COMMIT;
