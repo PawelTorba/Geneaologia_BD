@@ -717,3 +717,23 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_dodaj_osoby_do_zdjecia(INT,INT[])
 IS 'Dokleja osoby do zdjęcia w tabeli Osoby_Fotografie.';
+
+
+--#####################################################################
+--SP_EXPORT_TABLE_CSV() -- Procedura EKSPORTUJE DANE Z ZADANEJ TABELI DO PLIKU .CSV
+--#####################################################################
+CREATE OR REPLACE PROCEDURE sp_export_table_csv (
+    p_table TEXT,   -- nazwa tabeli, np. 'Osoby'
+    p_path  TEXT    -- ścieżka pliku, np. '/var/lib/postgresql/osoby.csv'
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    EXECUTE format(
+        $$COPY %I TO %L WITH (FORMAT csv, HEADER true)$$,
+        p_table,
+        p_path
+    );
+END;$$;
+
+COMMENT ON PROCEDURE sp_export_table_csv(TEXT, TEXT)
+IS 'Eksportuje całą tabelę do pliku CSV (COPY TO, CSV HEADER).';
