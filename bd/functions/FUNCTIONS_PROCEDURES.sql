@@ -1,4 +1,4 @@
--- 1.1  Dodaj osobę
+--SP_DODAJ_OSOBE() -- Funkcja dodaje osobę o określonych parametrach do tablicy Osoby.
 CREATE OR REPLACE FUNCTION sp_dodaj_osobe (
     p_imie           TEXT,
     p_nazwisko       TEXT,
