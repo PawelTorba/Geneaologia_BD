@@ -441,3 +441,233 @@ SELECT id_osoba
 $$;
 COMMENT ON FUNCTION fn_najblizszy_zyjacy_krewny(INT,INT)
 IS 'najbliższy żyjący krewny, NULL jeśli brak.';
+
+
+--sp_aktualizuj_zdarzenie
+CREATE OR REPLACE PROCEDURE sp_aktualizuj_zdarzenie(
+    p_id_zdarzenie INT,
+    p_nazwa        TEXT,
+    p_opis         TEXT,
+    p_data         DATE,
+    p_id_miejsce   INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE zdarzenia
+       SET nazwa_zdarzenia = p_nazwa,
+           opis_zdarzenia  = p_opis,
+           data_zdarzenia  = p_data,
+           id_miejsce      = p_id_miejsce
+     WHERE id_zdarzenie = p_id_zdarzenie;
+    IF NOT FOUND THEN RAISE EXCEPTION 'Brak zdarzenia ID=%', p_id_zdarzenie; END IF;
+END;$$;
+COMMENT ON PROCEDURE sp_aktualizuj_zdarzenie(INT,TEXT,TEXT,DATE,INT) IS 'Aktualizuje metadane zdarzenia.';
+
+CREATE OR REPLACE PROCEDURE sp_dodaj_uczestnika_zdarzenia(
+    p_id_zdarzenie INT,
+    p_id_osoba     INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    INSERT INTO osoby_zdarzenia(id_osoba, id_zdarzenie)
+    VALUES (p_id_osoba, p_id_zdarzenie)
+    ON CONFLICT DO NOTHING;
+END;$$;
+COMMENT ON PROCEDURE sp_dodaj_uczestnika_zdarzenia(INT,INT) IS 'Dodaje osobę do zdarzenia.';
+
+--sp_usun_uczestnika_zdarzenia
+CREATE OR REPLACE PROCEDURE sp_usun_uczestnika_zdarzenia(
+    p_id_zdarzenie INT,
+    p_id_osoba     INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    DELETE FROM osoby_zdarzenia
+     WHERE id_osoba = p_id_osoba
+       AND id_zdarzenie = p_id_zdarzenie;
+END;$$;
+COMMENT ON PROCEDURE sp_usun_uczestnika_zdarzenia(INT,INT) IS 'Usuwa osobę ze zdarzenia.';
+
+--dodaj miejsce
+CREATE OR REPLACE PROCEDURE sp_dodaj_miejsce(
+    p_nazwa        TEXT,
+    p_opis         TEXT,
+    p_lokalizacja  POINT
+) LANGUAGE plpgsql AS $$
+DECLARE v_id INT; BEGIN
+    INSERT INTO miejsca(nazwa_miejsca, Opis, lokalizacja)
+    VALUES (p_nazwa, p_opis, p_lokalizacja)
+    RETURNING id_miejsce INTO v_id;
+END;$$;
+COMMENT ON PROCEDURE sp_dodaj_miejsce(TEXT,TEXT,POINT) IS 'Dodaje nowe miejsce.';
+
+--sp_aktualizuj miejsce
+CREATE OR REPLACE PROCEDURE sp_aktualizuj_miejsce(
+    p_id_miejsce  INT,
+    p_nazwa       TEXT,
+    p_opis        TEXT,
+    p_lokalizacja POINT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE miejsca
+       SET nazwa_miejsca = p_nazwa,
+           opis  = p_opis,
+           lokalizacja   = p_lokalizacja
+     WHERE id_miejsce = p_id_miejsce;
+    IF NOT FOUND THEN RAISE EXCEPTION 'Brak miejsca ID=%', p_id_miejsce; END IF;
+END;$$;
+COMMENT ON PROCEDURE sp_aktualizuj_miejsce(INT,TEXT,TEXT,POINT) IS 'Aktualizuje miejsce.';
+
+--przypisz osobę do rodziny
+CREATE OR REPLACE PROCEDURE sp_przypisz_osobe_do_rodziny(
+    p_id_osoba   INT,
+    p_id_rodzina INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    INSERT INTO osoby_rodziny(id_osoba, id_rodzina)
+    VALUES (p_id_osoba, p_id_rodzina)
+    ON CONFLICT DO NOTHING;
+END;$$;
+COMMENT ON PROCEDURE sp_przypisz_osobe_do_rodziny(INT,INT) IS 'Dodaje osobę do rodziny.';
+
+--sp_aktualizuj_rodzine
+CREATE OR REPLACE PROCEDURE sp_aktualizuj_rodzine(
+    p_id_rodzina INT,
+    p_nazwisko   TEXT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE rodziny
+       SET nazwisko_rodziny = p_nazwisko
+     WHERE id_rodzina = p_id_rodzina;
+    IF NOT FOUND THEN RAISE EXCEPTION 'Brak rodziny ID=%', p_id_rodzina; END IF;
+END;$$;
+COMMENT ON PROCEDURE sp_aktualizuj_rodzine(INT,TEXT) IS 'Zmienia nazwisko rodziny.';
+
+--do usuwania rodziny
+CREATE OR REPLACE PROCEDURE sp_usun_rodzine(
+    p_id_rodzina INT,
+    p_force      BOOLEAN DEFAULT FALSE
+) LANGUAGE plpgsql AS $$
+BEGIN
+    IF NOT p_force AND EXISTS (SELECT 1 FROM osoby_rodziny WHERE id_rodzina = p_id_rodzina) THEN
+        RAISE EXCEPTION 'Rodzina ma członków – użyj p_force=TRUE lub usuń powiązania.';
+    END IF;
+    DELETE FROM osoby_rodziny WHERE id_rodzina = p_id_rodzina;
+    DELETE FROM rodziny WHERE id_rodzina = p_id_rodzina;
+END;$$;
+COMMENT ON PROCEDURE sp_usun_rodzine(INT,BOOLEAN) IS 'Usuwa rodzinę, z opcją wymuszenia.';
+
+
+--aktualizuj dane zdjecia
+CREATE OR REPLACE PROCEDURE sp_aktualizuj_foto(
+    p_id_zdjecie INT,
+    p_opis       TEXT,
+    p_data       DATE,
+    p_id_miejsce INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    UPDATE fotografie
+       SET opis_zdjecia   = p_opis,
+           data_wykonania = p_data,
+           id_miejsce     = p_id_miejsce
+     WHERE id_zdjecie = p_id_zdjecie;
+    IF NOT FOUND THEN RAISE EXCEPTION 'Brak zdjęcia ID=%', p_id_zdjecie; END IF;
+END;$$;
+COMMENT ON PROCEDURE sp_aktualizuj_foto(INT,TEXT,DATE,INT) IS 'Aktualizuje metadane fotografii.';
+
+
+--usuwa fotografie
+CREATE OR REPLACE PROCEDURE sp_usun_foto(
+    p_id_zdjecie INT
+) LANGUAGE plpgsql AS $$
+BEGIN
+    DELETE FROM osoby_fotografie     WHERE id_zdjecie = p_id_zdjecie;
+    DELETE FROM zdarzenia_fotografie WHERE id_zdjecie = p_id_zdjecie;
+    DELETE FROM fotografie           WHERE id_zdjecie = p_id_zdjecie;
+END;$$;
+COMMENT ON PROCEDURE sp_usun_foto(INT) IS 'Usuwa fotografię i powiązania.';
+
+--wyswietla wszystkich czlonków danej rodziny 
+CREATE OR REPLACE FUNCTION fn_czlonkowie_rodziny(p_id_rodzina INT)
+RETURNS TABLE(id_osoba INT, imie TEXT, nazwisko TEXT) LANGUAGE SQL STABLE AS $$
+SELECT o.id_osoba, o.imie, o.nazwisko
+  FROM osoby o JOIN osoby_rodziny orz USING(id_osoba)
+ WHERE orz.id_rodzina = p_id_rodzina;$$;
+COMMENT ON FUNCTION fn_czlonkowie_rodziny(INT) IS 'Członkowie wskazanej rodziny.';
+
+--wyswietla wszystkie zdarzenia, w których brała udział dana osoba
+CREATE OR REPLACE FUNCTION fn_wydarzenia_osoby(p_id_osoba INT)
+RETURNS TABLE(id_zdarzenie INT, nazwa TEXT, data DATE, id_miejsce INT) LANGUAGE SQL STABLE AS $$
+SELECT z.id_zdarzenie, z.nazwa_zdarzenia, z.data_zdarzenia, z.id_miejsce
+  FROM zdarzenia z JOIN osoby_zdarzenia oz USING(id_zdarzenie)
+ WHERE oz.id_osoba = p_id_osoba;$$;
+COMMENT ON FUNCTION fn_wydarzenia_osoby(INT) IS 'Wydarzenia z udziałem osoby.';
+
+--wyswietla wydarzenia, które miały miejsce w danym miejscu
+CREATE OR REPLACE FUNCTION fn_wydarzenia_miejsca(p_id_miejsce INT)
+RETURNS TABLE(id_zdarzenie INT, nazwa TEXT, data DATE) LANGUAGE SQL STABLE AS $$
+SELECT id_zdarzenie, nazwa_zdarzenia, data_zdarzenia
+  FROM zdarzenia
+ WHERE id_miejsce = p_id_miejsce;$$;
+COMMENT ON FUNCTION fn_wydarzenia_miejsca(INT) IS 'Wydarzenia odbywające się w danym miejscu.';
+
+--wyswietla id każdej fotografii wraz w wydarzeniem jakiego dotyczy
+CREATE OR REPLACE FUNCTION fn_fotografie_osoby(p_id_osoba INT)
+RETURNS TABLE(id_zdjecie INT, opis TEXT, data DATE, zdarzenia INT[]) LANGUAGE SQL STABLE AS $$
+SELECT f.id_zdjecie,
+       f.opis_zdjecia,
+       f.data_wykonania,
+       ARRAY(SELECT id_zdarzenie FROM zdarzenia_fotografie zf WHERE zf.id_zdjecie = f.id_zdjecie)
+  FROM fotografie f JOIN osoby_fotografie ofo USING(id_zdjecie)
+ WHERE ofo.id_osoba = p_id_osoba;$$;
+COMMENT ON FUNCTION fn_fotografie_osoby(INT) IS 'Fotografie osoby wraz z listą ID zdarzeń.';
+
+--wyswietla związki danej osoby wraz z imieniem i nazwiskiem partnera/partnerki
+CREATE OR REPLACE FUNCTION fn_zwiazki_osoby (
+    p_id_osoba INT
+)
+RETURNS TABLE (
+    id_zwiazek       INT,
+    typ              TEXT,
+    rozpoczecie      DATE,
+    zakonczenie      DATE,
+    id_partner       INT,
+    imie_partner     TEXT,
+    nazwisko_partner TEXT
+) LANGUAGE SQL STABLE AS
+$$
+SELECT z.id_zwiazek,
+       z.typ_relacji,
+       z.data_rozpoczecia,
+       z.data_zakonczenia,
+       o2.id_osoba,
+       o2.imie,
+       o2.nazwisko
+  FROM zwiazki z
+  JOIN osoby_zwiazki oz1 ON oz1.id_zwiazek = z.id_zwiazek
+  JOIN osoby_zwiazki oz2 ON oz2.id_zwiazek = z.id_zwiazek
+                        AND oz2.id_osoba <> p_id_osoba
+  JOIN osoby o2         ON o2.id_osoba    = oz2.id_osoba
+ WHERE oz1.id_osoba = p_id_osoba;
+$$;
+COMMENT ON FUNCTION fn_zwiazki_osoby(INT)
+IS 'Związki osoby + dane partnera/partnerki.';
+
+--dodaj osoby do zjdecia
+CREATE OR REPLACE PROCEDURE sp_dodaj_osoby_do_zdjecia(
+    p_id_zdjecie INT,
+    p_osoby      INT[]          -- tablica ID_Osoba
+)
+LANGUAGE plpgsql AS $$
+DECLARE
+    v_id INT;
+BEGIN
+    IF p_osoby IS NULL OR array_length(p_osoby,1) IS NULL THEN
+        RAISE EXCEPTION 'Podaj przynajmniej jedno ID osoby.';
+    END IF;
+
+    FOREACH v_id IN ARRAY p_osoby LOOP
+        INSERT INTO osoby_fotografie(id_osoba,id_zdjecie)
+        VALUES (v_id,p_id_zdjecie)
+        ON CONFLICT DO NOTHING;   -- ignoruje duplikaty
+    END LOOP;
+END;$$;
+COMMENT ON PROCEDURE sp_dodaj_osoby_do_zdjecia(INT,INT[])
+IS 'Dokleja osoby do zdjęcia w tabeli Osoby_Fotografie.';
