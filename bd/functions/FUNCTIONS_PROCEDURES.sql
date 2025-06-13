@@ -1,4 +1,6 @@
---SP_DODAJ_OSOBE() -- Funkcja dodaje osobę o określonych parametrach do tablicy Osoby.
+--#####################################################################
+--SP_DODAJ_OSOBE()            -- Funkcja dodaje osobę do tabeli Osoby.              
+--#####################################################################
 CREATE OR REPLACE FUNCTION sp_dodaj_osobe (
     p_imie           TEXT,
     p_nazwisko       TEXT,
@@ -29,8 +31,9 @@ BEGIN
 END;
 $$;
 
-
---Aktualizuj osobę
+--#####################################################################
+--SP_AKTUALIZUJ_OSOBE()       -- Procedura aktualizuje podstawowe dane osoby.      
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_aktualizuj_osobe (
     p_id             INT,
     p_imie           TEXT,
@@ -61,8 +64,9 @@ BEGIN
 END;
 $$;
 
-
---Usuń osobę kaskadowo (opcjonalnie p_force = TRUE)
+--#####################################################################
+--SP_USUN_OSOBE_CASCADE()     -- Procedura usuwa osobę i jej powiązania (kaskada). 
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_usun_osobe (
     p_id    INT,
     p_force BOOLEAN DEFAULT FALSE
@@ -90,7 +94,9 @@ BEGIN
 END;
 $$;
 
---Dodaj związek (domyślnie „małżeństwo”)
+--#####################################################################
+--SP_DODAJ_ZWIAZEK()          -- Funkcja tworzy nowy związek między osobami.       
+--#####################################################################
 CREATE OR REPLACE FUNCTION sp_dodaj_zwiazek (
     p_osoba1      INT,
     p_osoba2      INT,
@@ -127,8 +133,9 @@ BEGIN
 END;
 $$;
 
-
---Zakończ związek
+--#####################################################################
+--SP_ZAKONCZ_ZWIAZEK()        -- Procedura zamyka aktywny związek.                
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_zakoncz_zwiazek (
     p_id_zwiazek  INT,
     p_data_koniec DATE DEFAULT CURRENT_DATE,
@@ -150,9 +157,9 @@ BEGIN
 END;
 $$;
 
-
-
---Dodaj relację pokrewieństwa
+--#####################################################################
+--SP_DODAJ_POKREWIENSTWO()    -- Procedura dodaje relację pokrewieństwa.          
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_dodaj_pokrewienstwo (
     p_os1 INT,
     p_os2 INT,
@@ -174,7 +181,9 @@ BEGIN
 END;
 $$;
 
---Dodaj zdarzenie
+--#####################################################################
+--SP_DODAJ_ZDARZENIE()        -- Funkcja tworzy zdarzenie i przypisuje uczestników.
+--#####################################################################
 CREATE OR REPLACE FUNCTION sp_dodaj_zdarzenie (
     p_nazwa      TEXT,
     p_opis       TEXT,
@@ -205,9 +214,9 @@ BEGIN
 END;
 $$;
 
-------------------------------------------------------
---sp_merge_osoby(duplikat, oryginal) - Przepisuje wszystkie klucze obce z rekordu duplikat na rekord oryginal, po czym usuwa duplikat.
-------------------------------------------------------
+--#####################################################################
+--SP_MERGE_OSOBY()            -- Procedura scala duplikat z rekordem oryginalnym. 
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_merge_osoby (
     p_duplikat INT,
     p_oryginal INT
@@ -235,9 +244,9 @@ COMMENT ON PROCEDURE sp_merge_osoby(INT,INT)
 IS 'Scalanie duplikatów osób: przekierowuje FK i usuwa rekord duplikatu.';
 
 
-------------------------------------------------------
---sp_waliduj_relacje() -- wyświetla błędy "logiczne" w bazie danych (warunki można dodawać wedle potrzeby)
-------------------------------------------------------
+--#####################################################################
+--SP_WALIDUJ_RELACJE()        -- Funkcja raportuje niespójności genealogiczne.    
+--#####################################################################
 CREATE OR REPLACE FUNCTION sp_waliduj_relacje ()
 RETURNS TABLE(opis TEXT)
 LANGUAGE plpgsql
@@ -291,9 +300,9 @@ COMMENT ON FUNCTION sp_waliduj_relacje()
 IS 'Zwraca listę niespójności (dziecko starsze od rodzica, bigamia, itp.).';
 
 
-------------------------------------------------------
---fn_licznik_zdjec(id_osoba) -- zwaraca na ilu zdjęciach pojawia się dana osoba
-------------------------------------------------------
+--#####################################################################
+--FN_LICZNIK_ZDJEC()          -- Funkcja zwraca liczbę fotografii osoby.          
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_licznik_zdjec (
     p_id INT
 )
@@ -307,9 +316,9 @@ $$;
 COMMENT ON FUNCTION fn_licznik_zdjec(INT)
 IS 'Zwraca liczbe fotografii powiązanych z daną osobą.';
 
-------------------------------------------------------
---f_pokrewienstwa(id_osoba) -- wyswietla listę wszystkich krewnych dla danej osoby
-------------------------------------------------------
+--#####################################################################
+--F_POKREWIENSTWA()           -- Funkcja listuje krewnych wskazanej osoby.        
+--#####################################################################
 CREATE OR REPLACE FUNCTION f_pokrewienstwa(_id int)
 RETURNS TABLE (
     imie           text,
@@ -362,7 +371,9 @@ FROM   mapped
 ORDER  BY id_krewnego, pokrewienstwo, nazwisko, imie;
 $$;
 
---sp_dodaj_foto
+--#####################################################################
+--SP_DODAJ_FOTO()             -- Funkcja dodaje fotografię + powiązania.          
+--#####################################################################
 CREATE OR REPLACE FUNCTION sp_dodaj_foto (
     p_plik      BYTEA,          -- plik w BYTEA
     p_opis      TEXT,
@@ -404,7 +415,9 @@ IS 'Dodaje fotografię i wiąże ją z osobami / zdarzeniami.';
 
 
 
---fn_najblizszy_zyjacy_krewny
+--#####################################################################
+--FN_NAJBLIZSZY_ZYJACY_KREWNY()-- Funkcja zwraca ID najbliższego żyjącego krewnego.
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_najblizszy_zyjacy_krewny (
     p_id INT,
     p_max_poziom INT DEFAULT 6
@@ -443,7 +456,9 @@ COMMENT ON FUNCTION fn_najblizszy_zyjacy_krewny(INT,INT)
 IS 'najbliższy żyjący krewny, NULL jeśli brak.';
 
 
---sp_aktualizuj_zdarzenie
+--#####################################################################
+--SP_AKTUALIZUJ_ZDARZENIE()   -- Procedura aktualizuje metadane zdarzenia.        
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_aktualizuj_zdarzenie(
     p_id_zdarzenie INT,
     p_nazwa        TEXT,
@@ -462,6 +477,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_aktualizuj_zdarzenie(INT,TEXT,TEXT,DATE,INT) IS 'Aktualizuje metadane zdarzenia.';
 
+--#####################################################################
+--SP_DODAJ_UCZESTNIKA_ZDARZENIA() -- Dodaje osobę do zdarzenia.                   
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_dodaj_uczestnika_zdarzenia(
     p_id_zdarzenie INT,
     p_id_osoba     INT
@@ -473,7 +491,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_dodaj_uczestnika_zdarzenia(INT,INT) IS 'Dodaje osobę do zdarzenia.';
 
---sp_usun_uczestnika_zdarzenia
+--#####################################################################
+--SP_USUN_UCZESTNIKA_ZDARZENIA() -- Usuwa osobę ze zdarzenia.                     
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_usun_uczestnika_zdarzenia(
     p_id_zdarzenie INT,
     p_id_osoba     INT
@@ -485,7 +505,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_usun_uczestnika_zdarzenia(INT,INT) IS 'Usuwa osobę ze zdarzenia.';
 
---dodaj miejsce
+--#####################################################################
+--SP_DODAJ_MIEJSCE()          -- Procedura dodaje nowe miejsce.                   
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_dodaj_miejsce(
     p_nazwa        TEXT,
     p_opis         TEXT,
@@ -498,7 +520,9 @@ DECLARE v_id INT; BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_dodaj_miejsce(TEXT,TEXT,POINT) IS 'Dodaje nowe miejsce.';
 
---sp_aktualizuj miejsce
+--#####################################################################
+--SP_AKTUALIZUJ_MIEJSCE()     -- Procedura aktualizuje dane miejsca.              
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_aktualizuj_miejsce(
     p_id_miejsce  INT,
     p_nazwa       TEXT,
@@ -515,7 +539,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_aktualizuj_miejsce(INT,TEXT,TEXT,POINT) IS 'Aktualizuje miejsce.';
 
---przypisz osobę do rodziny
+--#####################################################################
+--SP_PRZYPISZ_OSOBE_DO_RODZINY() -- Dodaje osobę do wskazanej rodziny.            
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_przypisz_osobe_do_rodziny(
     p_id_osoba   INT,
     p_id_rodzina INT
@@ -527,7 +553,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_przypisz_osobe_do_rodziny(INT,INT) IS 'Dodaje osobę do rodziny.';
 
---sp_aktualizuj_rodzine
+--#####################################################################
+--SP_AKTUALIZUJ_RODZINE()     -- Procedura zmienia nazwisko rodziny.              
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_aktualizuj_rodzine(
     p_id_rodzina INT,
     p_nazwisko   TEXT
@@ -540,7 +568,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_aktualizuj_rodzine(INT,TEXT) IS 'Zmienia nazwisko rodziny.';
 
---do usuwania rodziny
+--#####################################################################
+--SP_USUN_RODZINE()           -- Procedura usuwa rodzinę (blokada, jeżeli są członkowie).
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_usun_rodzine(
     p_id_rodzina INT,
     p_force      BOOLEAN DEFAULT FALSE
@@ -555,7 +585,9 @@ END;$$;
 COMMENT ON PROCEDURE sp_usun_rodzine(INT,BOOLEAN) IS 'Usuwa rodzinę, z opcją wymuszenia.';
 
 
---aktualizuj dane zdjecia
+--#####################################################################
+--SP_AKTUALIZUJ_FOTO()        -- Procedura aktualizuje metadane fotografii.       
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_aktualizuj_foto(
     p_id_zdjecie INT,
     p_opis       TEXT,
@@ -573,7 +605,9 @@ END;$$;
 COMMENT ON PROCEDURE sp_aktualizuj_foto(INT,TEXT,DATE,INT) IS 'Aktualizuje metadane fotografii.';
 
 
---usuwa fotografie
+--#####################################################################
+--SP_USUN_FOTO()              -- Procedura usuwa fotografię i powiązania.         
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_usun_foto(
     p_id_zdjecie INT
 ) LANGUAGE plpgsql AS $$
@@ -584,7 +618,9 @@ BEGIN
 END;$$;
 COMMENT ON PROCEDURE sp_usun_foto(INT) IS 'Usuwa fotografię i powiązania.';
 
---wyswietla wszystkich czlonków danej rodziny 
+--#####################################################################
+--FN_CZLONKOWIE_RODZINY()     -- Funkcja zwraca członków wskazanej rodziny.       
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_czlonkowie_rodziny(p_id_rodzina INT)
 RETURNS TABLE(id_osoba INT, imie TEXT, nazwisko TEXT) LANGUAGE SQL STABLE AS $$
 SELECT o.id_osoba, o.imie, o.nazwisko
@@ -592,7 +628,9 @@ SELECT o.id_osoba, o.imie, o.nazwisko
  WHERE orz.id_rodzina = p_id_rodzina;$$;
 COMMENT ON FUNCTION fn_czlonkowie_rodziny(INT) IS 'Członkowie wskazanej rodziny.';
 
---wyswietla wszystkie zdarzenia, w których brała udział dana osoba
+--#####################################################################
+--FN_WYDARZENIA_OSOBY()       -- Funkcja listuje zdarzenia z udziałem osoby.      
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_wydarzenia_osoby(p_id_osoba INT)
 RETURNS TABLE(id_zdarzenie INT, nazwa TEXT, data DATE, id_miejsce INT) LANGUAGE SQL STABLE AS $$
 SELECT z.id_zdarzenie, z.nazwa_zdarzenia, z.data_zdarzenia, z.id_miejsce
@@ -600,7 +638,9 @@ SELECT z.id_zdarzenie, z.nazwa_zdarzenia, z.data_zdarzenia, z.id_miejsce
  WHERE oz.id_osoba = p_id_osoba;$$;
 COMMENT ON FUNCTION fn_wydarzenia_osoby(INT) IS 'Wydarzenia z udziałem osoby.';
 
---wyswietla wydarzenia, które miały miejsce w danym miejscu
+--#####################################################################
+--FN_WYDARZENIA_MIEJSCA()     -- Funkcja listuje zdarzenia odbywające się w miejscu.
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_wydarzenia_miejsca(p_id_miejsce INT)
 RETURNS TABLE(id_zdarzenie INT, nazwa TEXT, data DATE) LANGUAGE SQL STABLE AS $$
 SELECT id_zdarzenie, nazwa_zdarzenia, data_zdarzenia
@@ -608,7 +648,9 @@ SELECT id_zdarzenie, nazwa_zdarzenia, data_zdarzenia
  WHERE id_miejsce = p_id_miejsce;$$;
 COMMENT ON FUNCTION fn_wydarzenia_miejsca(INT) IS 'Wydarzenia odbywające się w danym miejscu.';
 
---wyswietla id każdej fotografii wraz w wydarzeniem jakiego dotyczy
+--#####################################################################
+--FN_FOTOGRAFIE_OSOBY()       -- Funkcja zwraca fotografie osoby + ID zdarzeń.    
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_fotografie_osoby(p_id_osoba INT)
 RETURNS TABLE(id_zdjecie INT, opis TEXT, data DATE, zdarzenia INT[]) LANGUAGE SQL STABLE AS $$
 SELECT f.id_zdjecie,
@@ -619,7 +661,9 @@ SELECT f.id_zdjecie,
  WHERE ofo.id_osoba = p_id_osoba;$$;
 COMMENT ON FUNCTION fn_fotografie_osoby(INT) IS 'Fotografie osoby wraz z listą ID zdarzeń.';
 
---wyswietla związki danej osoby wraz z imieniem i nazwiskiem partnera/partnerki
+--#####################################################################
+--FN_ZWIAZKI_OSOBY()          -- Funkcja listuje związki osoby + dane partnera.   
+--#####################################################################
 CREATE OR REPLACE FUNCTION fn_zwiazki_osoby (
     p_id_osoba INT
 )
@@ -650,7 +694,9 @@ $$;
 COMMENT ON FUNCTION fn_zwiazki_osoby(INT)
 IS 'Związki osoby + dane partnera/partnerki.';
 
---dodaj osoby do zjdecia
+--#####################################################################
+--SP_DODAJ_OSOBY_DO_ZDJECIA() -- Procedura dokleja osoby do istniejącego zdjęcia. 
+--#####################################################################
 CREATE OR REPLACE PROCEDURE sp_dodaj_osoby_do_zdjecia(
     p_id_zdjecie INT,
     p_osoby      INT[]          -- tablica ID_Osoba
