@@ -722,18 +722,32 @@ IS 'Dokleja osoby do zdjęcia w tabeli Osoby_Fotografie.';
 --#####################################################################
 --SP_EXPORT_TABLE_CSV() -- Procedura EKSPORTUJE DANE Z ZADANEJ TABELI DO PLIKU .CSV
 --#####################################################################
-CREATE OR REPLACE PROCEDURE sp_export_table_csv (
-    p_table TEXT,   -- nazwa tabeli, np. 'Osoby'
-    p_path  TEXT    -- ścieżka pliku, np. '/var/lib/postgresql/osoby.csv'
+
+CREATE OR REPLACE PROCEDURE sp_export_csv(
+    p_table TEXT,
+    p_file  TEXT
 )
 LANGUAGE plpgsql AS $$
+DECLARE
+    v_tbl  TEXT := lower(p_table);
+    v_path TEXT := 'C:/Program Files/PostgreSQL/17/data/' || p_file;
 BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+          FROM pg_class c
+          JOIN pg_namespace n ON n.oid = c.relnamespace
+         WHERE c.relkind = 'r'
+           AND c.relname = v_tbl
+           AND n.nspname = current_schema
+    ) THEN
+        RAISE EXCEPTION 'Tabela % nie istnieje w schemacie %', p_table, current_schema;
+    END IF;
     EXECUTE format(
-        $$COPY %I TO %L WITH (FORMAT csv, HEADER true)$$,
-        p_table,
-        p_path
+        'COPY %s TO %L WITH (FORMAT csv, HEADER true);',
+        quote_ident(v_tbl),
+        v_path
     );
 END;$$;
 
-COMMENT ON PROCEDURE sp_export_table_csv(TEXT, TEXT)
-IS 'Eksportuje całą tabelę do pliku CSV (COPY TO, CSV HEADER).';
+COMMENT ON PROCEDURE sp_export_csv(TEXT, TEXT)
+IS 'Eksportuje wskazaną tabelę do CSV w katalogu .../Eksport_CSV/.';
